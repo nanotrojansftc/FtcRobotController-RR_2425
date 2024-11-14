@@ -1,17 +1,10 @@
-//package teamcode;
+
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
 import org.firstinspires.ftc.robotcore.internal.system.Deadline;
-import org.firstinspires.ftc.teamcode.DriveControl;
-import org.firstinspires.ftc.teamcode.DriveControl_NanoTorjan;
-import org.firstinspires.ftc.teamcode.controls_NanoTrojans;
-import org.firstinspires.ftc.teamcode.resources_NanoTrojans;
-import org.firstinspires.ftc.teamcode.resources_base_NanoTrojans;
-
 import java.util.concurrent.TimeUnit;
 
 @TeleOp(name = "TeleOpMain2_2425", group = "TeleOp")

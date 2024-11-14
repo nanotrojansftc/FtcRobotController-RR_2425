@@ -10,11 +10,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 
-//import org.firstinspires.ftc.robotcore.internal.system.Deadline;
-
-
-import java.util.concurrent.TimeUnit;
-
 
 @TeleOp(name = "TeleOpMain1_2425", group = "TeleOp")
 
