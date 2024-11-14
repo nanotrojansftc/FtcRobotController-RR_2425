@@ -17,6 +17,12 @@ import org.firstinspires.ftc.robotcore.internal.system.Deadline;
 import java.util.concurrent.TimeUnit;
 
 
+//import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+
+
+
+
+
 @TeleOp(name = "TeleOpMain1_2425", group = "TeleOp")
 
 
@@ -79,13 +85,11 @@ public class TeleOpMain1_25 extends LinearOpMode {
 
 
         //Start 2  threads
-        //baseControlThread.start();
+        baseControlThread.start();
 
         //empty thead do nothing at this time
         while (opModeIsActive())
         {
-            telemetry.addData("x", gamepad1.left_stick_x);
-            telemetry.addData("y", gamepad1.left_stick_y);
         }
 
     }
