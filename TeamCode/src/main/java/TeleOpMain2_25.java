@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.internal.system.Deadline;
 import org.firstinspires.ftc.teamcode.DriveControl;
+import org.firstinspires.ftc.teamcode.DriveControl_NanoTorjan;
 import org.firstinspires.ftc.teamcode.controls_NanoTrojans;
 import org.firstinspires.ftc.teamcode.resources_NanoTrojans;
 import org.firstinspires.ftc.teamcode.resources_base_NanoTrojans;
@@ -28,7 +29,7 @@ public class TeleOpMain2_25 extends LinearOpMode {
 
 
     //private DriveControl_NanoTorjan driveControl;
-    private DriveControl driveControl;
+    private DriveControl_NanoTorjan driveControl;
 
     private controls_NanoTrojans g2control;
 
@@ -67,7 +68,7 @@ public class TeleOpMain2_25 extends LinearOpMode {
 
         casketpos = resources.claw.getPosition();
 
-        driveControl = new DriveControl(resourcesbase.leftFront, resourcesbase.rightFront, resourcesbase.leftBack, resourcesbase.rightBack, imu);
+        driveControl = new DriveControl_NanoTorjan(resourcesbase.leftFront, resourcesbase.rightFront, resourcesbase.leftBack, resourcesbase.rightBack);
         g2control = new controls_NanoTrojans(resources.lsRight, resources.lsLeft, resources.claw,
                 resources.lhsl, resources.rhsl, resources.rintakelift, resources.lintakelift, resources.intakewheels, resources.casket);
 
@@ -118,14 +119,21 @@ public class TeleOpMain2_25 extends LinearOpMode {
             waitForStart();
             while (!Thread.interrupted() && opModeIsActive()) {
                 if (gamepad2.y) {
-                    if (!horizontalls) ;
-                    {
-                        g2control.horizontal_fw();
-                    }
-                    if (horizontalls) {
-                        g2control.horizontal_back();
-                    }
-                    horizontalls = !horizontalls;
+//                    if (!horizontalls) ;
+//                    {
+//                        g2control.horizontal_fw();
+//                        sleep(100);
+//
+//                    }
+//                    if (horizontalls) {
+//                        g2control.horizontal_back();
+//                        sleep(100);
+//                    }
+//                    horizontalls = !horizontalls;
+                    g2control.horizontal_fw();
+                }
+                if (gamepad2.b){
+                    g2control.horizontal_back();
                 }
             }
         }
@@ -143,7 +151,7 @@ public class TeleOpMain2_25 extends LinearOpMode {
             while (!Thread.interrupted() && opModeIsActive()) {
 
                 double lspower = gamepad2.right_stick_y;
-                resources.lsRight.setPower(lspower);
+                resources.lsRight.setPower(-lspower);
                 resources.lsLeft.setPower(-lspower);
 
             }
@@ -194,9 +202,11 @@ public class TeleOpMain2_25 extends LinearOpMode {
                 if (gamepad2.a){
                     if (!clawopen){
                         g2control.closeclaw();
+                        sleep(100);
                     }
                     else {
                         g2control.openclaw();
+                        sleep(100);
                     }
                     clawopen = !clawopen;
                 }

@@ -64,7 +64,7 @@ public class controls_NanoTrojans {
     public void closeclaw()
     {
         //for the claw, it is a regular motor so you set positions; you just have to keep tweaking the code and test out positions that you input.
-        claw.setPosition(0.55);
+        claw.setPosition(1);
     }
     public void openclaw()
     {
@@ -77,15 +77,16 @@ public class controls_NanoTrojans {
     {
         //for the claw, it is a regular motor so you set positions; you just have to keep tweaking the code and test out positions that you input.
 
-        lhsl.setPosition(0.5);
+//        lhsl.setPosition(0.8);
         rhsl.setPosition(0.5);
     }
 
     public void horizontal_back()
     {
         //for the claw, it is a regular motor so you set positions; you just have to keep tweaking the code and test out positions that you input.
-        lhsl.setPosition(0.7);
-        rhsl.setPosition(0.3);
+//        lhsl.setPosition(0);
+        rhsl.setPosition(0.5);
+        // left 5 right 1
     }
     public void casket_fw()
     {
@@ -100,8 +101,8 @@ public class controls_NanoTrojans {
         lintakelift.setPosition(0.5);
     }
     public void intakedown(){
-        rintakelift.setPosition(0.3);
-        lintakelift.setPosition(0.7);
+        rintakelift.setPosition(0.7);
+        lintakelift.setPosition(0.3);
     }
 
 //    public void intake(){
