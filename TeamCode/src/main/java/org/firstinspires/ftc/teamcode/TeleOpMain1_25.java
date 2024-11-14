@@ -79,19 +79,16 @@ public class TeleOpMain1_25 extends LinearOpMode {
 
         waitForStart();
         Thread baseControlThread = new Thread(new baseControl());
-        Thread hlsThread = new Thread(new hls());
-//        Thread armControlThread = new Thread(new armControl());
-        Thread lsControlThread = new Thread(new lsControl());
-        Thread activeThread = new Thread(new active());
-        Thread armThread = new Thread(new arm());
+//        Thread hlsThread = new Thread(new hls());
+////        Thread armControlThread = new Thread(new armControl());
+//        Thread lsControlThread = new Thread(new lsControl());
+//        Thread activeThread = new Thread(new lsControl2());
 
 
         //Start 2  threads
         baseControlThread.start();
-        hlsThread.start();
-        lsControlThread.start();
-        activeThread.start();
-        armThread.start();
+//        hlsThread.start();
+//        lsControlThread.start();
 
         //empty thead do nothing at this time
         while (opModeIsActive()) {
@@ -118,137 +115,14 @@ public class TeleOpMain1_25 extends LinearOpMode {
 
     }
 
-    public class hls implements Runnable {
-        @Override
-        public void run() {
-            waitForStart();
-            while (!Thread.interrupted() && opModeIsActive()) {
-                if (gamepad2.y) {
-                    if (!horizontalls) ;
-                    {
-                        g2control.horizontal_fw();
-                    }
-                    if (horizontalls) {
-                        g2control.horizontal_back();
-                    }
-                    horizontalls = !horizontalls;
-                }
-            }
-        }
-
-
-    }// end of thread horizontal linear slides
-
-    private class lsControl implements Runnable {
-        boolean clawClosed = false;
-
-        @Override
-        public void run() {
-
-            waitForStart();
-            while (!Thread.interrupted() && opModeIsActive()) {
-
-                double lspower = gamepad2.right_stick_y;
-                resources.lsRight.setPower(lspower);
-                resources.lsLeft.setPower(-lspower);
-
-            }
-        }
-    }//end of thread lscontrol
-
-    private class active implements Runnable {
-        boolean clawClosed = false;
-
-        @Override
-        public void run() {
-
-
-            waitForStart();
-            while (!Thread.interrupted() && opModeIsActive()) {
-                if (gamepad2.left_stick_y > 0) {
-                    g2control.iwheels();
-                }
-                if (gamepad2.left_stick_y < 0) {
-                    g2control.iwheelback();
-                }
-                else {
-                    g2control.iwheelstop();
-                }
-//
-            }
-        }
-    }//end of thread active intake
-    private class arm implements Runnable {
-        @Override
-        public void run() {
-            boolean casketup = false;
-            boolean clawopen = false;
-            waitForStart();
-            while (!Thread.interrupted() && opModeIsActive()) {
-
-                if (gamepad2.x){
-                    if (!casketup ){
-                        g2control.casket_back();
-                    }
-                    else {
-                        g2control.casket_fw();
-                    }
-                    casketup=!casketup;
-
-
-                }
-                if (gamepad2.a){
-                    if (!clawopen){
-                        g2control.closeclaw();
-                    }
-                    else {
-                        g2control.openclaw();
-                    }
-                    clawopen = !clawopen;
-                }
-
-                if (gamepad2.dpad_up){
-                    g2control.intakeup();
-                }
-                if (gamepad2.dpad_down){
-                    g2control.intakedown();
-                }
 
 
 
-                boolean enableTel = false;
-
-
-                if(enableTel) {
-//
-                    telemetry.addData("Claw position:", clawpos);
-                    telemetry.addData("Left Horizontal Slide position:", lhslpos);
-                    telemetry.addData("Right Horizontal Slide position:", rhslpos);
-                    telemetry.addData("Casket position:",casketpos);
+    // end of thread horizontal linear slides
 
 
 
 
-
-
-                    telemetry.update();
-
-
-                }
-
-
-            }
-
-        }
-
-
-
-
-
-
-
-
-    }
 
 }//end of big class
 
