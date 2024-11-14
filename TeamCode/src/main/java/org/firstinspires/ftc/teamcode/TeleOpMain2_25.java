@@ -1,5 +1,5 @@
 //package teamcode;
-
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -14,26 +14,15 @@ import org.firstinspires.ftc.teamcode.resources_base_NanoTrojans;
 
 import java.util.concurrent.TimeUnit;
 
-
-//import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
-
-
 @TeleOp(name = "TeleOpMain2_2425", group = "TeleOp")
-
-
 
 public class TeleOpMain2_25 extends LinearOpMode {
 
-
     private final int READ_PERIOD = 1;
-
 
     //private DriveControl_NanoTorjan driveControl;
     private DriveControl_NanoTorjan driveControl;
-
     private controls_NanoTrojans g2control;
-
-
     private resources_NanoTrojans resources;
 
     private resources_base_NanoTrojans resourcesbase;
@@ -45,9 +34,6 @@ public class TeleOpMain2_25 extends LinearOpMode {
 
     BNO055IMU imu;
 
-//    CRServo intakewheel = hardwareMap.get(CRServo.class, "intakewheel");
-
-
     @Override
     public void runOpMode() throws InterruptedException {
         resources = new resources_NanoTrojans(hardwareMap);
@@ -58,7 +44,6 @@ public class TeleOpMain2_25 extends LinearOpMode {
         parameters.loggingTag = "IMU";
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
-
 
         Deadline rateLimit = new Deadline(READ_PERIOD, TimeUnit.SECONDS);
         rateLimit.expire();
@@ -75,11 +60,10 @@ public class TeleOpMain2_25 extends LinearOpMode {
         waitForStart();
         Thread baseControlThread = new Thread(new baseControl());
         Thread hlsThread = new Thread(new hls());
-//        Thread armControlThread = new Thread(new armControl());
+        //Thread armControlThread = new Thread(new armControl());
         Thread lsControlThread = new Thread(new lsControl());
         Thread activeThread = new Thread(new active());
         Thread armThread = new Thread(new arm());
-
 
         //Start 2  threads
         baseControlThread.start();
@@ -103,15 +87,12 @@ public class TeleOpMain2_25 extends LinearOpMode {
         @Override
         public void run() {
             waitForStart();
-
             while (!Thread.interrupted() && opModeIsActive()) {
                 driveControl.driveRobot(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
-            }
+            } //end of while loop
 
-        }//end of class baseControl
-
-
-    }
+        }//end of run
+    }//end of class baseControl
 
     public class hls implements Runnable {
         @Override
@@ -135,10 +116,8 @@ public class TeleOpMain2_25 extends LinearOpMode {
                 if (gamepad2.b){
                     g2control.horizontal_back();
                 }
-            }
-        }
-
-
+            }//end of while
+        }//end of run
     }// end of thread horizontal linear slides
 
     private class lsControl implements Runnable {
@@ -154,8 +133,8 @@ public class TeleOpMain2_25 extends LinearOpMode {
                 resources.lsRight.setPower(-lspower);
                 resources.lsLeft.setPower(-lspower);
 
-            }
-        }
+            }//end of while
+        }//end of run
     }//end of thread lscontrol
 
     private class active implements Runnable {
@@ -163,7 +142,6 @@ public class TeleOpMain2_25 extends LinearOpMode {
 
         @Override
         public void run() {
-
 
             waitForStart();
             while (!Thread.interrupted() && opModeIsActive()) {
@@ -176,10 +154,10 @@ public class TeleOpMain2_25 extends LinearOpMode {
                 else {
                     g2control.iwheelstop();
                 }
-//
-            }
-        }
+            } //end of while loop
+        }//end of run
     }//end of thread active intake
+
     private class arm implements Runnable {
         @Override
         public void run() {
@@ -218,41 +196,18 @@ public class TeleOpMain2_25 extends LinearOpMode {
                     g2control.intakedown();
                 }
 
-
-
+                //for debugging
                 boolean enableTel = false;
-
-
                 if(enableTel) {
-//
                     telemetry.addData("Claw position:", clawpos);
                     telemetry.addData("Left Horizontal Slide position:", lhslpos);
                     telemetry.addData("Right Horizontal Slide position:", rhslpos);
                     telemetry.addData("Casket position:",casketpos);
-
-
-
-
-
-
                     telemetry.update();
-
-
                 }
-
-
-            }
-
-        }
-
-
-
-
-
-
-
-
-    }
+            }//end of while loop
+        }//end of run
+    }// end of class arm
 
 }//end of big class
 
