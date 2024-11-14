@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode;
 //package teamcode;
 
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -34,7 +36,7 @@ public class TeleOpMain1_25 extends LinearOpMode {
 
 
     //private DriveControl_NanoTorjan driveControl;
-    private DriveControl driveControl;
+    private DriveControl_NanoTorjan driveControl;
 
     private controls_NanoTrojans g2control;
 
@@ -52,9 +54,11 @@ public class TeleOpMain1_25 extends LinearOpMode {
 
 //    CRServo intakewheel = hardwareMap.get(CRServo.class, "intakewheel");
 
-
+    public Boolean printonce = true;
     @Override
     public void runOpMode() throws InterruptedException {
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+
         resources = new resources_NanoTrojans(hardwareMap);
         resourcesbase = new resources_base_NanoTrojans(hardwareMap);
 
@@ -73,7 +77,7 @@ public class TeleOpMain1_25 extends LinearOpMode {
 
         casketpos = resources.claw.getPosition();
 
-        driveControl = new DriveControl(resourcesbase.leftFront, resourcesbase.rightFront, resourcesbase.leftBack, resourcesbase.rightBack, imu);
+        driveControl = new DriveControl_NanoTorjan(resourcesbase.leftFront, resourcesbase.rightFront, resourcesbase.leftBack, resourcesbase.rightBack);
         g2control = new controls_NanoTrojans(resources.lsRight, resources.lsLeft, resources.claw,
                 resources.lhsl, resources.rhsl, resources.rintakelift, resources.lintakelift, resources.intakewheels, resources.casket);
 
@@ -88,8 +92,14 @@ public class TeleOpMain1_25 extends LinearOpMode {
         baseControlThread.start();
 
         //empty thead do nothing at this time
+
         while (opModeIsActive())
         {
+            if(printonce) {
+                telemetry.addData("x", gamepad1.left_stick_x);
+                telemetry.addData("y", gamepad1.left_stick_y);
+                printonce = false;
+            }
         }
 
     }
@@ -99,14 +109,17 @@ public class TeleOpMain1_25 extends LinearOpMode {
     // This is the thread class to control the base of the robot to move arround, this normally is
     // controlled by another person seperated from the base control person
     public class baseControl implements Runnable {
-        boolean droneLaunced = false;
+        //boolean droneLaunced = false;
 
         @Override
         public void run() {
             waitForStart();
 
             while (!Thread.interrupted() && opModeIsActive()) {
+                telemetry.addData("x", gamepad1.left_stick_x);
+                telemetry.addData("y", gamepad1.left_stick_y);
                 driveControl.driveRobot(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
+
             }
 
         }//end of class baseControl
