@@ -1,28 +1,19 @@
 package org.firstinspires.ftc.teamcode;
-//package teamcode;
-
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.PoseVelocity2d;
+import com.acmerobotics.roadrunner.Vector2d;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
 
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import org.firstinspires.ftc.robotcore.internal.system.Deadline;
+//import org.firstinspires.ftc.robotcore.internal.system.Deadline;
 
 
 import java.util.concurrent.TimeUnit;
-
-
-//import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
-
-
-
 
 
 @TeleOp(name = "TeleOpMain1_2425", group = "TeleOp")
@@ -31,18 +22,9 @@ import java.util.concurrent.TimeUnit;
 
 public class TeleOpMain1_25 extends LinearOpMode {
 
-
-    private final int READ_PERIOD = 1;
-
-
-    //private DriveControl_NanoTorjan driveControl;
     private DriveControl_NanoTorjan driveControl;
-
     private controls_NanoTrojans g2control;
-
-
     private resources_NanoTrojans resources;
-
     private resources_base_NanoTrojans resourcesbase;
 
     double clawpos = 0;
@@ -52,9 +34,7 @@ public class TeleOpMain1_25 extends LinearOpMode {
 
     BNO055IMU imu;
 
-//    CRServo intakewheel = hardwareMap.get(CRServo.class, "intakewheel");
 
-    public Boolean printonce = true;
     @Override
     public void runOpMode() throws InterruptedException {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
@@ -68,9 +48,6 @@ public class TeleOpMain1_25 extends LinearOpMode {
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
 
-
-        Deadline rateLimit = new Deadline(READ_PERIOD, TimeUnit.SECONDS);
-        rateLimit.expire();
         clawpos = resources.claw.getPosition();
         lhslpos = resources.lhsl.getPosition();
         rhslpos = resources.rhsl.getPosition();
@@ -79,7 +56,7 @@ public class TeleOpMain1_25 extends LinearOpMode {
 
         driveControl = new DriveControl_NanoTorjan(resourcesbase.leftFront, resourcesbase.rightFront, resourcesbase.leftBack, resourcesbase.rightBack);
         g2control = new controls_NanoTrojans(resources.lsRight, resources.lsLeft, resources.claw,
-                resources.lhsl, resources.rhsl, resources.rintakelift, resources.lintakelift, resources.intakewheels, resources.casket);
+                       resources.lhsl, resources.rhsl, resources.rintakelift, resources.lintakelift, resources.intakewheels, resources.casket);
 
         waitForStart();
         Thread baseControlThread = new Thread(new baseControl());
@@ -87,19 +64,26 @@ public class TeleOpMain1_25 extends LinearOpMode {
 //        Thread lsControlThread = new Thread(new lsControl());
 //        Thread lsControl2 = new Thread(new lsControl2());
 
+        //Start 2  threads , this use the nano_trojan base drive algorithem
+        //baseControlThread.start();
 
-        //Start 2  threads
-        baseControlThread.start();
-
-        //empty thead do nothing at this time
-
+        MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(0, 0, 0));
         while (opModeIsActive())
         {
-            if(printonce) {
-                telemetry.addData("x", gamepad1.left_stick_x);
-                telemetry.addData("y", gamepad1.left_stick_y);
-                printonce = false;
-            }
+            drive.setDrivePowers(new PoseVelocity2d(
+                    new Vector2d(
+                            -gamepad1.left_stick_y,
+                            -gamepad1.left_stick_x
+                    ),
+                    -gamepad1.right_stick_x
+            ));
+
+            drive.updatePoseEstimate();
+
+            telemetry.addData("x", drive.pose.position.x);
+            telemetry.addData("y", drive.pose.position.y);
+            telemetry.addData("heading (deg)", Math.toDegrees(drive.pose.heading.toDouble()));
+            telemetry.update();
         }
 
     }
@@ -108,6 +92,7 @@ public class TeleOpMain1_25 extends LinearOpMode {
     // The following is developed by NT , but we are not using it now
     // This is the thread class to control the base of the robot to move arround, this normally is
     // controlled by another person seperated from the base control person
+    // use the nano_trojan base drive algorithem
     public class baseControl implements Runnable {
         //boolean droneLaunced = false;
 
@@ -122,15 +107,11 @@ public class TeleOpMain1_25 extends LinearOpMode {
 
             }
 
-        }//end of class baseControl
+        }//end of run
+    }//end of class baseControl
 
 
-    }
-
-
-
-
-}//end of big class
+}//end of big class  TeleOpMain1_25
 
 
 
