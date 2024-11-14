@@ -18,11 +18,9 @@ import java.util.concurrent.TimeUnit;
 
 @TeleOp(name = "TeleOpMain1_2425", group = "TeleOp")
 
-
-
 public class TeleOpMain1_25 extends LinearOpMode {
 
-    private DriveControl_NanoTorjan driveControl;
+    private DriveControl_NanoTorjan baseDriveControl;
     private controls_NanoTrojans g2control;
     private resources_NanoTrojans resources;
     private resources_base_NanoTrojans resourcesbase;
@@ -54,7 +52,7 @@ public class TeleOpMain1_25 extends LinearOpMode {
 
         casketpos = resources.claw.getPosition();
 
-        driveControl = new DriveControl_NanoTorjan(resourcesbase.leftFront, resourcesbase.rightFront, resourcesbase.leftBack, resourcesbase.rightBack);
+        baseDriveControl = new DriveControl_NanoTorjan(resourcesbase.leftFront, resourcesbase.rightFront, resourcesbase.leftBack, resourcesbase.rightBack);
         g2control = new controls_NanoTrojans(resources.lsRight, resources.lsLeft, resources.claw,
                        resources.lhsl, resources.rhsl, resources.rintakelift, resources.lintakelift, resources.intakewheels, resources.casket);
 
@@ -103,7 +101,7 @@ public class TeleOpMain1_25 extends LinearOpMode {
             while (!Thread.interrupted() && opModeIsActive()) {
                 telemetry.addData("x", gamepad1.left_stick_x);
                 telemetry.addData("y", gamepad1.left_stick_y);
-                driveControl.driveRobot(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
+                baseDriveControl.driveRobot(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
 
             }
 
