@@ -58,6 +58,9 @@ public class controls_NanoTrojans {
     {
         intakewheels.setPower(0);
     }
+    public void iwheelback(){
+        intakewheels.setPower(-1);
+    }
     public void closeclaw()
     {
         //for the claw, it is a regular motor so you set positions; you just have to keep tweaking the code and test out positions that you input.

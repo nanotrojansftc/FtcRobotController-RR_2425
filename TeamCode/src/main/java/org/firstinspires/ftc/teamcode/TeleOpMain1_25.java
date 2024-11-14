@@ -42,7 +42,7 @@ public class TeleOpMain1_25 extends LinearOpMode {
     private resources_NanoTrojans resources;
 
     private resources_base_NanoTrojans resourcesbase;
-
+    boolean horizontalls = false;
     double clawpos = 0;
     double lhslpos = 0;
     double rhslpos = 0;
@@ -79,17 +79,22 @@ public class TeleOpMain1_25 extends LinearOpMode {
 
         waitForStart();
         Thread baseControlThread = new Thread(new baseControl());
+        Thread hlsThread = new Thread(new hls());
 //        Thread armControlThread = new Thread(new armControl());
-//        Thread lsControlThread = new Thread(new lsControl());
-//        Thread lsControl2 = new Thread(new lsControl2());
+        Thread lsControlThread = new Thread(new lsControl());
+        Thread activeThread = new Thread(new active());
+        Thread armThread = new Thread(new arm());
 
 
         //Start 2  threads
         baseControlThread.start();
+        hlsThread.start();
+        lsControlThread.start();
+        activeThread.start();
+        armThread.start();
 
         //empty thead do nothing at this time
-        while (opModeIsActive())
-        {
+        while (opModeIsActive()) {
         }
 
     }
@@ -99,7 +104,6 @@ public class TeleOpMain1_25 extends LinearOpMode {
     // This is the thread class to control the base of the robot to move arround, this normally is
     // controlled by another person seperated from the base control person
     public class baseControl implements Runnable {
-        boolean droneLaunced = false;
 
         @Override
         public void run() {
@@ -114,8 +118,137 @@ public class TeleOpMain1_25 extends LinearOpMode {
 
     }
 
+    public class hls implements Runnable {
+        @Override
+        public void run() {
+            waitForStart();
+            while (!Thread.interrupted() && opModeIsActive()) {
+                if (gamepad2.y) {
+                    if (!horizontalls) ;
+                    {
+                        g2control.horizontal_fw();
+                    }
+                    if (horizontalls) {
+                        g2control.horizontal_back();
+                    }
+                    horizontalls = !horizontalls;
+                }
+            }
+        }
 
 
+    }// end of thread horizontal linear slides
+
+    private class lsControl implements Runnable {
+        boolean clawClosed = false;
+
+        @Override
+        public void run() {
+
+            waitForStart();
+            while (!Thread.interrupted() && opModeIsActive()) {
+
+                double lspower = gamepad2.right_stick_y;
+                resources.lsRight.setPower(lspower);
+                resources.lsLeft.setPower(-lspower);
+
+            }
+        }
+    }//end of thread lscontrol
+
+    private class active implements Runnable {
+        boolean clawClosed = false;
+
+        @Override
+        public void run() {
+
+
+            waitForStart();
+            while (!Thread.interrupted() && opModeIsActive()) {
+                if (gamepad2.left_stick_y > 0) {
+                    g2control.iwheels();
+                }
+                if (gamepad2.left_stick_y < 0) {
+                    g2control.iwheelback();
+                }
+                else {
+                    g2control.iwheelstop();
+                }
+//
+            }
+        }
+    }//end of thread active intake
+    private class arm implements Runnable {
+        @Override
+        public void run() {
+            boolean casketup = false;
+            boolean clawopen = false;
+            waitForStart();
+            while (!Thread.interrupted() && opModeIsActive()) {
+
+                if (gamepad2.x){
+                    if (!casketup ){
+                        g2control.casket_back();
+                    }
+                    else {
+                        g2control.casket_fw();
+                    }
+                    casketup=!casketup;
+
+
+                }
+                if (gamepad2.a){
+                    if (!clawopen){
+                        g2control.closeclaw();
+                    }
+                    else {
+                        g2control.openclaw();
+                    }
+                    clawopen = !clawopen;
+                }
+
+                if (gamepad2.dpad_up){
+                    g2control.intakeup();
+                }
+                if (gamepad2.dpad_down){
+                    g2control.intakedown();
+                }
+
+
+
+                boolean enableTel = false;
+
+
+                if(enableTel) {
+//
+                    telemetry.addData("Claw position:", clawpos);
+                    telemetry.addData("Left Horizontal Slide position:", lhslpos);
+                    telemetry.addData("Right Horizontal Slide position:", rhslpos);
+                    telemetry.addData("Casket position:",casketpos);
+
+
+
+
+
+
+                    telemetry.update();
+
+
+                }
+
+
+            }
+
+        }
+
+
+
+
+
+
+
+
+    }
 
 }//end of big class
 
