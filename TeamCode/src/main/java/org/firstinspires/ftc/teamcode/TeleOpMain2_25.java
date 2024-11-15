@@ -141,13 +141,16 @@ public class TeleOpMain2_25 extends LinearOpMode {
             waitForStart();
             while (!Thread.interrupted() && opModeIsActive()) {
                 if (gamepad2.left_stick_y > 0) {
-                    g2control.iwheels();
+                    //g2control.iwheels();
+                    resources.intakewheels.setPower(-1);
                 }
                 if (gamepad2.left_stick_y < 0) {
-                    g2control.iwheelback();
+                    //g2control.iwheelback();
+                    resources.intakewheels.setPower(1);
                 }
                 else {
-                    g2control.iwheelstop();
+                    //g2control.iwheelstop();
+                    resources.intakewheels.setPower(0);
                 }
             } //end of while loop
         }//end of run
@@ -163,10 +166,12 @@ public class TeleOpMain2_25 extends LinearOpMode {
 
                 if (gamepad2.x){
                     if (!casketup ){
-                        g2control.casket_back();
+                        resources.casket.setPosition(0.5);
+                        //g2control.casket_back();
                     }
                     else {
-                        g2control.casket_fw();
+                        resources.casket.setPosition(0.2);
+                        //g2control.casket_fw();
                     }
                     casketup=!casketup;
 
@@ -185,10 +190,14 @@ public class TeleOpMain2_25 extends LinearOpMode {
                 }
 
                 if (gamepad2.dpad_up){
-                    g2control.intakeup();
+                    //g2control.intakeup();
+                    resources.lintakelift.setPosition(0.5);
+                    resources.rintakelift.setPosition(0.5);
                 }
                 if (gamepad2.dpad_down){
-                    g2control.intakedown();
+                    //g2control.intakedown();
+                    resources.lintakelift.setPosition(0.7);
+                    resources.rintakelift.setPosition(0.3);
                 }
 
                 //for debugging
