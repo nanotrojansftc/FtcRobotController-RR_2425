@@ -104,12 +104,16 @@ public class TeleOpMain2_25 extends LinearOpMode {
 //                        sleep(100);
 //                    }
 //                    horizontalls = !horizontalls;
-                    resources.rhsl.setPosition(0.5);
-                    resources.lhsl.setPosition(0.5);
+                    //g2control.horizontal_fw();
+                    resources.rhsl.setPosition(0);
+                    resources.lhsl.setPosition(0.1);
                     //g2control.horizontal_fw();
                 }
                 if (gamepad2.b){
-                    g2control.horizontal_back();
+                    //g2control.horizontal_back();
+
+                    resources.rhsl.setPosition(0.30);
+                    resources.lhsl.setPosition(0.0);
                 }
             }//end of while
         }//end of run
@@ -140,18 +144,10 @@ public class TeleOpMain2_25 extends LinearOpMode {
 
             waitForStart();
             while (!Thread.interrupted() && opModeIsActive()) {
-                if (gamepad2.left_stick_y > 0) {
-                    //g2control.iwheels();
-                    resources.intakewheels.setPower(-1);
-                }
-                if (gamepad2.left_stick_y < 0) {
-                    //g2control.iwheelback();
-                    resources.intakewheels.setPower(1);
-                }
-                else {
-                    //g2control.iwheelstop();
-                    resources.intakewheels.setPower(0);
-                }
+                double activepower = gamepad2.left_stick_y;
+                resources.intakewheels.setPower(activepower);
+
+
             } //end of while loop
         }//end of run
     }//end of thread active intake
@@ -179,11 +175,13 @@ public class TeleOpMain2_25 extends LinearOpMode {
                 }
                 if (gamepad2.a){
                     if (!clawopen){
-                        g2control.closeclaw();
+                        //g2control.closeclaw();
+                        resources.claw.setPosition(1);
                         sleep(100);
                     }
                     else {
-                        g2control.openclaw();
+                        //g2control.openclaw();
+                        resources.claw.setPosition(0.8);
                         sleep(100);
                     }
                     clawopen = !clawopen;

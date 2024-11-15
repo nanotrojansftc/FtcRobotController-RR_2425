@@ -78,14 +78,15 @@ public class controls_NanoTrojans {
         //for the claw, it is a regular motor so you set positions; you just have to keep tweaking the code and test out positions that you input.
 
 //        lhsl.setPosition(0.8);
-        rhsl.setPosition(0.5);
+        rhsl.setPosition(0.9);
+
     }
 
     public void horizontal_back()
     {
         //for the claw, it is a regular motor so you set positions; you just have to keep tweaking the code and test out positions that you input.
 //        lhsl.setPosition(0);
-        rhsl.setPosition(0.5);
+        lhsl.setPosition(0.5);
         // left 5 right 1
     }
     public void casket_fw()

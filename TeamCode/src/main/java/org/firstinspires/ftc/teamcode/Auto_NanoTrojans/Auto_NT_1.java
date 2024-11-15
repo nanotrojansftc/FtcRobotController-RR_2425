@@ -45,8 +45,8 @@ import org.firstinspires.ftc.teamcode.resources_NanoTrojans;
 public class Auto_NT_1 extends LinearOpMode {
 
     // Constants for encoder counts and wheel measurements
-    private controls_NanoTrojans g2control;
-    private resources_NanoTrojans resources;
+    //private controls_NanoTrojans g2control;
+    //private resources_NanoTrojans resources;
 
 
     @Override
@@ -63,17 +63,19 @@ public class Auto_NT_1 extends LinearOpMode {
         MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(0, 0, 0));
         Pose2d beginPose = new Pose2d(0, 0, 0);
 
+        telemetry.addData("x", 5);
+        telemetry.addData("y", 6);
+        telemetry.update();
+
         boolean stop = false;
         waitForStart();
 
         while (opModeIsActive() && !stop) {
 
            //telemetry.addData("Blue Close Got position", position2);
-            telemetry.update();
-
             telemetry.addData("x", drive.pose.position.x);
             telemetry.addData("y", drive.pose.position.y);
-            telemetry.addData("heading (deg)", Math.toDegrees(drive.pose.heading.toDouble()));
+           // telemetry.addData("heading (deg)", Math.toDegrees(drive.pose.heading.toDouble()));
             telemetry.update();
 
             Actions.runBlocking(
@@ -81,11 +83,19 @@ public class Auto_NT_1 extends LinearOpMode {
                             .splineTo(new Vector2d(30, 30), Math.PI / 2)
                             .splineTo(new Vector2d(0, 60), Math.PI)
                             .build());
+            telemetry.addData("x", drive.pose.position.x);
+            telemetry.addData("y", drive.pose.position.y);
+            // telemetry.addData("heading (deg)", Math.toDegrees(drive.pose.heading.toDouble()));
+            telemetry.update();
             Actions.runBlocking(
                     drive.actionBuilder(new Pose2d(0, 0, 0))
                             .lineToX(10)
                             .lineToX(0)
                             .build());
+            telemetry.addData("x", drive.pose.position.x);
+            telemetry.addData("y", drive.pose.position.y);
+            // telemetry.addData("heading (deg)", Math.toDegrees(drive.pose.heading.toDouble()));
+            telemetry.update();
 
             stop = true;
 
