@@ -25,7 +25,7 @@ public class TeleOpMain1_25 extends LinearOpMode {
     double rhslpos = 0;
     double casketpos = 0;
 
-    BNO055IMU imu;
+    //BNO055IMU imu;
 
 
     @Override
@@ -35,11 +35,11 @@ public class TeleOpMain1_25 extends LinearOpMode {
         resources = new resources_NanoTrojans(hardwareMap);
         resourcesbase = new resources_base_NanoTrojans(hardwareMap);
 
-        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.loggingEnabled = true;
-        parameters.loggingTag = "IMU";
-        imu = hardwareMap.get(BNO055IMU.class, "imu");
-        imu.initialize(parameters);
+//        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+//        parameters.loggingEnabled = true;
+//        parameters.loggingTag = "IMU";
+//        imu = hardwareMap.get(BNO055IMU.class, "imu");
+//        imu.initialize(parameters);
 
         clawpos = resources.claw.getPosition();
         lhslpos = resources.lhsl.getPosition();

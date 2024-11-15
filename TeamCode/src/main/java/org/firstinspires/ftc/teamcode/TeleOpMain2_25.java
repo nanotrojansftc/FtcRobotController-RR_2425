@@ -104,7 +104,9 @@ public class TeleOpMain2_25 extends LinearOpMode {
 //                        sleep(100);
 //                    }
 //                    horizontalls = !horizontalls;
-                    g2control.horizontal_fw();
+                    resources.rhsl.setPosition(0.5);
+                    resources.lhsl.setPosition(0.5);
+                    //g2control.horizontal_fw();
                 }
                 if (gamepad2.b){
                     g2control.horizontal_back();
