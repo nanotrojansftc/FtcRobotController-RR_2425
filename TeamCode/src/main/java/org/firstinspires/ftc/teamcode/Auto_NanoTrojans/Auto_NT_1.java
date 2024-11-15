@@ -25,7 +25,9 @@ package org.firstinspires.ftc.teamcode.Auto_NanoTrojans;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -77,14 +79,25 @@ public class Auto_NT_1 extends LinearOpMode {
             telemetry.addData("y", drive.pose.position.y);
            // telemetry.addData("heading (deg)", Math.toDegrees(drive.pose.heading.toDouble()));
             telemetry.update();
+            Action trajectoryAction1= drive.actionBuilder(beginPose)
+                    .splineTo(new Vector2d(30, 30), Math.PI / 2)
+                    .splineTo(new Vector2d(0, 60), Math.PI)
+                    .build();
 
             Actions.runBlocking(
-                    drive.actionBuilder(beginPose)
-                            .splineTo(new Vector2d(30, 30), Math.PI / 2)
-                            .splineTo(new Vector2d(0, 60), Math.PI)
-                            .build());
-            telemetry.addData("x", drive.pose.position.x);
-            telemetry.addData("y", drive.pose.position.y);
+                    new SequentialAction(
+                            trajectoryAction1
+
+                    )
+            );
+
+//            Actions.runBlocking(
+//                    drive.actionBuilder(beginPose)
+//                            .splineTo(new Vector2d(30, 30), Math.PI / 2)
+//                            .splineTo(new Vector2d(0, 60), Math.PI)
+//                            .build());
+            telemetry.addData("x", 7);
+            telemetry.addData("y", 8);
             // telemetry.addData("heading (deg)", Math.toDegrees(drive.pose.heading.toDouble()));
             telemetry.update();
             Actions.runBlocking(
