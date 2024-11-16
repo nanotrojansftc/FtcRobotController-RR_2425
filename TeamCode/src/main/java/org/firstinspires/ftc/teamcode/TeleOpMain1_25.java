@@ -42,8 +42,7 @@ public class TeleOpMain1_25 extends LinearOpMode {
 //        imu.initialize(parameters);
 
         clawpos = resources.claw.getPosition();
-        lhslpos = resources.lhsl.getPosition();
-        rhslpos = resources.rhsl.getPosition();
+
 
         casketpos = resources.claw.getPosition();
 

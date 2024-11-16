@@ -19,8 +19,10 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
-@Autonomous(name = "BLUE_TEST_AUTO_PIXEL", group = "Autonomous")
+@Autonomous(name = "ExampleAuto")
 public class ExampleAuto extends LinearOpMode {
+
+
 //    public class Lift {
 //        private DcMotorEx lift;
 //
@@ -157,39 +159,40 @@ public class ExampleAuto extends LinearOpMode {
         // actions that need to happen on init; for instance, a claw tightening.
        // Actions.runBlocking(claw.closeClaw());
 
-
+        waitForStart();
         while (!isStopRequested() && !opModeIsActive()) {
             int position = visionOutputPosition;
             telemetry.addData("Position during Init", position);
             telemetry.update();
-        }
+            //}
 
-        int startPosition = visionOutputPosition;
-        telemetry.addData("Starting Position", startPosition);
-        telemetry.update();
-        waitForStart();
+            int startPosition = visionOutputPosition;
+            telemetry.addData("Starting Position", startPosition);
+            telemetry.update();
+            waitForStart();
 
-        if (isStopRequested()) return;
+            if (isStopRequested()) return;
 
-        Action trajectoryActionChosen;
-        if (startPosition == 1) {
-            trajectoryActionChosen = trajectoryAction1;
-        } else if (startPosition == 2) {
-            trajectoryActionChosen = trajectoryAction2;
-        } else {
-            trajectoryActionChosen = trajectoryAction3;
-        }
+            Action trajectoryActionChosen;
+            if (startPosition == 1) {
+                trajectoryActionChosen = trajectoryAction1;
+            } else if (startPosition == 2) {
+                trajectoryActionChosen = trajectoryAction2;
+            } else {
+                trajectoryActionChosen = trajectoryAction3;
+            }
 
-        telemetry.addData("Stop is not request", startPosition);
-        telemetry.update();
-        Actions.runBlocking(
-                new SequentialAction(
-                        trajectoryActionChosen,
+            telemetry.addData("Stop is not request", startPosition);
+            telemetry.update();
+            Actions.runBlocking(
+                    new SequentialAction(
+                            trajectoryActionChosen,
 //                        lift.liftUp(),
 //                        claw.openClaw(),
 //                        lift.liftDown(),
-                        trajectoryActionCloseOut
-                )
-        );
+                            trajectoryActionCloseOut
+                    )
+            );
+        }
     }
 }

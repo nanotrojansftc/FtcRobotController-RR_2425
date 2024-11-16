@@ -1,11 +1,8 @@
-package org.firstinspires.ftc.teamcode;
-
-
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-public class controls_NanoTrojans {
+public class controls2_NanoTrojans {
     // Constants for encoder counts and wheel measurements
     static final double COUNTS_PER_REVOLUTION = 537.7; // Encoder counts per revolution
     static final double WHEEL_DIAMETER_MM = 96.0; // Wheel diameter in millimeters
@@ -33,8 +30,8 @@ public class controls_NanoTrojans {
     //private CRServo robotLift = null;
 
 
-    public controls_NanoTrojans(DcMotor lsR, DcMotor lsL, Servo claws,CRServo lhorizontal,
-                                CRServo rhorizontal, CRServo rintakeliftS, CRServo lintakeliftS, CRServo intakewheelsCRS, Servo casketS)
+    public controls2_NanoTrojans(DcMotor lsR, DcMotor lsL, Servo claws, Servo lhorizontal,
+                                 Servo rhorizontal, CRServo rintakeliftS, CRServo lintakeliftS, CRServo intakewheelsCRS, Servo casketS)
     {
         //intake= intak;
         lsRight=lsR;

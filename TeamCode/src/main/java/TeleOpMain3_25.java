@@ -1,22 +1,25 @@
-
-package org.firstinspires.ftc.teamcode;
-
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
 import org.firstinspires.ftc.robotcore.internal.system.Deadline;
+import org.firstinspires.ftc.teamcode.DriveControl_NanoTorjan;
+import org.firstinspires.ftc.teamcode.controls_NanoTrojans;
+import org.firstinspires.ftc.teamcode.resources_NanoTrojans;
+import org.firstinspires.ftc.teamcode.resources_base_NanoTrojans;
+
 import java.util.concurrent.TimeUnit;
 
-@TeleOp(name = "TeleOpMain2_2425", group = "TeleOp")
+@TeleOp(name = "TeleOpMain3_2425", group = "TeleOp")
 
-public class TeleOpMain2_25 extends LinearOpMode {
+public class TeleOpMain3_25 extends LinearOpMode {
 
     private final int READ_PERIOD = 1;
 
     //private DriveControl_NanoTorjan driveControl;
     private DriveControl_NanoTorjan driveControl;
-    private controls_NanoTrojans g2control;
-    private resources_NanoTrojans resources;
+    private controls2_NanoTrojans g2control;
+    private resources2_NanoTrojans resources;
 
     private resources_base_NanoTrojans resourcesbase;
     boolean horizontalls = false;
@@ -33,7 +36,7 @@ public class TeleOpMain2_25 extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        resources = new resources_NanoTrojans(hardwareMap);
+        resources = new resources2_NanoTrojans(hardwareMap);
         resourcesbase = new resources_base_NanoTrojans(hardwareMap);
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -48,7 +51,7 @@ public class TeleOpMain2_25 extends LinearOpMode {
 
 
         driveControl = new DriveControl_NanoTorjan(resourcesbase.leftFront, resourcesbase.rightFront, resourcesbase.leftBack, resourcesbase.rightBack);
-        g2control = new controls_NanoTrojans(resources.lsRight, resources.lsLeft, resources.claw,
+        g2control = new controls2_NanoTrojans(resources.lsRight, resources.lsLeft, resources.claw,
                 resources.lhsl, resources.rhsl, resources.rintakelift, resources.lintakelift, resources.intakewheels, resources.casket);
 
         waitForStart();
@@ -93,18 +96,20 @@ public class TeleOpMain2_25 extends LinearOpMode {
         public void run() {
             waitForStart();
             while (!Thread.interrupted() && opModeIsActive()) {
+                    resources.rhsl.setPosition(0);
+                    resources.lhsl.setPosition(0);
 
-                double hlsbool = gamepad2.right_trigger;
-//                if (hlsbool >=0.7){
-//                    resources.rhsl.setPower(0);
-//                    resources.lhsl.setPower(0);
-//                }
-                resources.rhsl.setPower(hlsbool);
-                resources.lhsl.setPower(-hlsbool);
-
-                double hlsboolback = gamepad2.left_trigger;
-                resources.rhsl.setPower(-hlsboolback);
-                resources.lhsl.setPower(hlsboolback);
+//                double hlsbool = gamepad2.right_trigger;
+////                if (hlsbool >=0.7){
+////                    resources.rhsl.setPower(0);
+////                    resources.lhsl.setPower(0);
+////                }
+//                resources.rhsl.setPower(hlsbool);
+//                resources.lhsl.setPower(-hlsbool);
+//
+//                double hlsboolback = gamepad2.left_trigger;
+//                resources.rhsl.setPower(-hlsboolback);
+//                resources.lhsl.setPower(hlsboolback);
 //                if (gamepad2.right_bumper){
 //                    horizontalls=true;
 //                }
@@ -112,7 +117,7 @@ public class TeleOpMain2_25 extends LinearOpMode {
 //                    horizontalls=false;
 //                }
 
-                //if (gamepad2.y) {
+                if (gamepad2.y) {
 //                    if (!horizontalls) ;
 //                    {
 //                        g2control.horizontal_fw();
@@ -124,17 +129,17 @@ public class TeleOpMain2_25 extends LinearOpMode {
 //                        sleep(100);
 //                    }
 //                    horizontalls = !horizontalls;
-                    //g2control.horizontal_fw();
-//                    resources.rhsl.setPosition(0.15);
-//                    resources.lhsl.setPosition(0.7);
-                    //g2control.horizontal_fw();
-               // }
-//                if (gamepad2.b){
-//                    //g2control.horizontal_back();
-//
-////                    resources.rhsl.setPosition(0.65);
-////                    resources.lhsl.setPosition(0.1);
-//                }
+//                    g2control.horizontal_fw();
+                    resources.rhsl.setPosition(0.15);
+                    resources.lhsl.setPosition(0.7);
+//                    g2control.horizontal_fw();
+                }
+                if (gamepad2.b){
+                    //g2control.horizontal_back();
+
+                    resources.rhsl.setPosition(0.65);
+                    resources.lhsl.setPosition(0.1);
+                }
 
 
             }//end of while
@@ -195,8 +200,8 @@ public class TeleOpMain2_25 extends LinearOpMode {
 
                 if (gamepad2.x){
                     if (!casketup ){
-//                        resources.claw.setPosition(0.8);
-//                        sleep(250);
+                        resources.claw.setPosition(0.8);
+                        sleep(250);
                         resources.casket.setPosition(0.25);
                         sleep(250);
                         //g2control.casket_back();
@@ -210,7 +215,7 @@ public class TeleOpMain2_25 extends LinearOpMode {
 
 
                 }
-                if (gamepad2.a){
+                if (gamepad2.left_bumper){
                     resources.claw.setPosition(1);
 //
 //                    if (!clawopen){
@@ -227,7 +232,7 @@ public class TeleOpMain2_25 extends LinearOpMode {
 //                    }
 //                    clawopen = !clawopen;
                 }
-                if (gamepad2.b){
+                if (gamepad2.right_bumper){
                     resources.claw.setPosition(0.8);
                 }
 
