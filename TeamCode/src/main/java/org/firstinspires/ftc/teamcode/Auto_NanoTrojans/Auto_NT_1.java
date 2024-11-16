@@ -36,9 +36,6 @@ import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.controls_NanoTrojans;
 import org.firstinspires.ftc.teamcode.resources_NanoTrojans;
 
-
-
-
 /**
  * This class contains the Autonomous Mode program.
  */
@@ -64,7 +61,7 @@ public class Auto_NT_1 extends LinearOpMode {
         //Base driver instance
         MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(0, 0, 0));
         Pose2d beginPose = new Pose2d(0, 0, 0);
-
+        drive.pose = beginPose;
         telemetry.addData("x", 5);
         telemetry.addData("y", 6);
         telemetry.update();
@@ -74,10 +71,10 @@ public class Auto_NT_1 extends LinearOpMode {
 
         while (opModeIsActive() && !stop) {
 
-           //telemetry.addData("Blue Close Got position", position2);
+            //telemetry.addData("Blue Close Got position", position2);
             telemetry.addData("x", drive.pose.position.x);
             telemetry.addData("y", drive.pose.position.y);
-           // telemetry.addData("heading (deg)", Math.toDegrees(drive.pose.heading.toDouble()));
+            // telemetry.addData("heading (deg)", Math.toDegrees(drive.pose.heading.toDouble()));
             telemetry.update();
             Action trajectoryAction1= drive.actionBuilder(beginPose)
                     .splineTo(new Vector2d(30, 30), Math.PI / 2)
