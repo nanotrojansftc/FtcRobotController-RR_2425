@@ -235,14 +235,14 @@ public class TeleOpMain2_25 extends LinearOpMode {
 //                    //g2control.intakeup();
 //
 //                }
-                boolean liftpower = gamepad2.dpad_up;
-                boolean neglift = gamepad2.dpad_down;
-                if (liftpower){
+//                boolean liftpower = gamepad2.dpad_up;
+//                boolean neglift = gamepad2.dpad_down;
+                if (gamepad2.dpad_up){
                     resources.lintakelift.setPower(1);
                     resources.rintakelift.setPower(-1);
 
                 }
-                if (neglift){
+                if (gamepad2.dpad_down){
                     resources.lintakelift.setPower(-1);
                     resources.rintakelift.setPower(1);
                 }
