@@ -69,7 +69,7 @@ public class Auto_NT_1 extends LinearOpMode {
         boolean stop = false;
         waitForStart();
 
-        while (opModeIsActive() && !stop) {
+        while (opModeIsActive() ) {
 
             //telemetry.addData("Blue Close Got position", position2);
             telemetry.addData("x", drive.pose.position.x);

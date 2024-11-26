@@ -1,12 +1,10 @@
+package org.firstinspires.ftc.teamcode;
+
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.internal.system.Deadline;
-import org.firstinspires.ftc.teamcode.DriveControl_NanoTorjan;
-import org.firstinspires.ftc.teamcode.controls_NanoTrojans;
-import org.firstinspires.ftc.teamcode.resources_NanoTrojans;
-import org.firstinspires.ftc.teamcode.resources_base_NanoTrojans;
 
 import java.util.concurrent.TimeUnit;
 
@@ -94,10 +92,13 @@ public class TeleOpMain3_25 extends LinearOpMode {
     public class hls implements Runnable {
         @Override
         public void run() {
+            double rhsl = 0;
+            double lhsl = 0;
             waitForStart();
             while (!Thread.interrupted() && opModeIsActive()) {
-                    resources.rhsl.setPosition(0);
-                    resources.lhsl.setPosition(0);
+
+                resources.rhsl.setPosition(rhsl);
+                resources.lhsl.setPosition(lhsl);
 
 //                double hlsbool = gamepad2.right_trigger;
 ////                if (hlsbool >=0.7){
@@ -130,15 +131,29 @@ public class TeleOpMain3_25 extends LinearOpMode {
 //                    }
 //                    horizontalls = !horizontalls;
 //                    g2control.horizontal_fw();
-                    resources.rhsl.setPosition(0.15);
-                    resources.lhsl.setPosition(0.7);
+                    rhsl = 0.15;
+                    lhsl = 0.65;
+                    resources.rhsl.setPosition(rhsl);
+                    resources.lhsl.setPosition(lhsl);
 //                    g2control.horizontal_fw();
                 }
                 if (gamepad2.b){
                     //g2control.horizontal_back();
+                    rhsl = 0.65;
+                    lhsl = 0.15;
 
-                    resources.rhsl.setPosition(0.65);
-                    resources.lhsl.setPosition(0.1);
+                    resources.rhsl.setPosition(rhsl);
+                    resources.lhsl.setPosition(lhsl);
+                }
+                while (gamepad2.left_stick_y>=0){
+                    rhsl=- 0.05;
+                    lhsl=+ 0.05;
+
+                }
+                while (gamepad2.left_stick_y<=0){
+                    rhsl=+ 0.05;
+                    lhsl=- 0.05;
+
                 }
 
 
@@ -180,12 +195,12 @@ public class TeleOpMain3_25 extends LinearOpMode {
         public void run() {
 
             waitForStart();
-            while (!Thread.interrupted() && opModeIsActive()) {
-                double activepower = gamepad2.left_stick_x;
-                resources.intakewheels.setPower(activepower);
-
-
-            } //end of while loop
+//            while (!Thread.interrupted() && opModeIsActive()) {
+//                double activepower = gamepad2.left_stick_x;
+//                resources.intakewheels.setPower(activepower);
+//
+//
+//            } //end of while loop
         }//end of run
     }//end of thread active intake
 
@@ -242,12 +257,12 @@ public class TeleOpMain3_25 extends LinearOpMode {
 //                }
                 boolean liftpower = gamepad2.dpad_up;
                 boolean neglift = gamepad2.dpad_down;
-                if (liftpower){
+                if (gamepad2.dpad_up){
                     resources.lintakelift.setPower(1);
                     resources.rintakelift.setPower(-1);
 
                 }
-                if (neglift){
+                if (gamepad2.dpad_down){
                     resources.lintakelift.setPower(-1);
                     resources.rintakelift.setPower(1);
                 }

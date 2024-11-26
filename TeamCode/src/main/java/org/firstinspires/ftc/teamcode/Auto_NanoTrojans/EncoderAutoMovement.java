@@ -30,8 +30,8 @@ public class EncoderAutoMovement extends LinearOpMode {
         rightBack = hardwareMap.get(DcMotor.class, "rightBack");
 
         // Set motor directions
-        leftFront.setDirection(DcMotor.Direction.REVERSE);
-        leftBack.setDirection(DcMotor.Direction.REVERSE);
+//        leftFront.setDirection(DcMotor.Direction.REVERSE);
+//        leftBack.setDirection(DcMotor.Direction.REVERSE);
 
         // Reset encoders and set to RUN_USING_ENCODER mode
         leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -47,7 +47,9 @@ public class EncoderAutoMovement extends LinearOpMode {
         waitForStart();
 
         // Drive forward 5 feet (60 inches)
-        drive(1, 30);
+        drive(1, 10);
+//        strafe(-1, 15);
+//        strafe(1, 15);
 
         // Strafe right 0.5 feet (6 inches)
 //        strafe(0.5, 6);

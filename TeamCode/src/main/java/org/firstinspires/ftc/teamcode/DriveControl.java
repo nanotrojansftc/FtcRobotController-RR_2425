@@ -10,18 +10,18 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 public class DriveControl {
-    private DcMotor frontLeft;
-    private DcMotor frontRight;
-    private DcMotor backLeft;
-    private DcMotor backRight;
+    private DcMotor leftFront;
+    private DcMotor rightFront;
+    private DcMotor leftBack;
+    private DcMotor rightBack;
     private BNO055IMU imu;
     private Orientation angles;
 
     public DriveControl(DcMotor fl, DcMotor fr, DcMotor bl, DcMotor br, BNO055IMU imuInstance) {
-        this.frontLeft = fl;
-        this.frontRight = fr;
-        this.backLeft = bl;
-        this.backRight = br;
+        this.leftFront = fl;
+        this.rightFront = fr;
+        this.leftBack = bl;
+        this.rightBack = br;
         this.imu = imuInstance;
     }
 
@@ -50,10 +50,10 @@ public class DriveControl {
         }
 
         // Set power to motors
-        frontLeft.setPower(v1);
-        frontRight.setPower(-v2);
-        backLeft.setPower(v3);
-        backRight.setPower(v4);
+        leftFront.setPower(v1);
+        rightFront.setPower(-v2);
+        leftBack.setPower(v3);
+        rightBack.setPower(v4);
 
         telemetry.addData("Heading ", globalAngle);
         telemetry.addData("Stick1 ", robotAngle);
